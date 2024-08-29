@@ -6,6 +6,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/template.html',
+      favicon: './src/assets/favicon.png',
     }),
   ],
   module: {
@@ -19,7 +20,7 @@ module.exports = {
         use: ['html-loader'],
       },
       {
-        test: /\(svg|png|jpg|jpeg|gif)$/i,
+        test: /\.(svg|png|jpg|jpeg|gif)$/i,
         use: {
           loader: 'file-loader',
           options: {
@@ -28,7 +29,6 @@ module.exports = {
             outputPath: 'imgs',
           },
         },
-      },
     ],
   },
 };
