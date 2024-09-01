@@ -1,28 +1,58 @@
 import '../style/main.scss';
 import * as apiFuncs from './api.js';
 import * as icon from './icon.js';
+import * as util from './utils.js';
 
-const searchInput = document.querySelector('input');
-const form = document.querySelector('form');
-const body = document.querySelector('body');
+// DOM
+(function () {
+  const searchInput = document.querySelector('input');
+  const form = document.querySelector('form');
+  const body = document.querySelector('body');
 
-const h1 = document.querySelector('#cityName');
-const p = document.querySelector('p');
-const iconDiv = document.getElementById('icon');
+  const h1 = document.getElementById('cityName');
+  const p = document.getElementById('temperature');
+  const iconDiv = document.getElementById('icon');
+  const span = document.getElementById('degree');
+  const toggleButton = document.getElementById('cel-fah');
 
-form.addEventListener('submit', (e) => {
-  if (searchInput.value) {
-    const promise = apiFuncs.hitApi(searchInput.value);
-    apiFuncs.getWeatherData(promise).then((response) => {
-      h1.textContent = response.cityFullName;
-      p.textContent = `${response.cityTemp} degrees Fahrenheit`;
-      iconDiv.innerHTML = icon.getIcon(response.icon);
-    });
+  form.addEventListener('submit', (e) => {
+    if (searchInput.value) {
+      const promise = apiFuncs.hitApi(searchInput.value);
+      apiFuncs.getWeatherData(promise).then((response) => {
+        h1.textContent = response.cityFullName;
+        p.innerText = response.cityTemp;
+        span.classList.add('show');
+        iconDiv.innerHTML = icon.getIcon(response.icon);
+      });
 
-    form.reset();
-  }
-  e.preventDefault();
-});
+      form.reset();
+    }
+    e.preventDefault();
+  });
+
+  toggleButton.addEventListener('click', () => {
+    span.classList.toggle('celsius');
+
+    const degree = Number(p.innerText);
+    let newDegree;
+    if (span.classList.contains('celsius')) {
+      toggleButton.textContent = 'fahrenheit';
+      span.innerHTML = '&deg;C';
+      if (p.innerText === '') {
+        return;
+      }
+      newDegree = util.fahrenheitToCelsius(degree);
+    } else {
+      toggleButton.textContent = 'celsius';
+      span.innerHTML = '&deg;F';
+      if (p.innerText === '') {
+        return;
+      }
+      newDegree = util.celsiusToFahrenheit(degree);
+    }
+    p.innerText = newDegree;
+  });
+})();
 
 // const promise = apiFuncs.hitApi('toronto');
 // apiFuncs.processJSON(promise);

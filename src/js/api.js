@@ -1,3 +1,5 @@
+import * as util from './utils.js';
+
 function hitApi(city) {
   const apiKey = 'AZMSJW8MDWHLZ8WGESZARBBK2';
   const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${city}/?key=${apiKey}`;
@@ -10,9 +12,15 @@ async function getWeatherData(promise) {
   const weatherData = await promise.then((response) => response.json());
   const condition = weatherData.currentConditions;
   const cityFullName = weatherData.resolvedAddress;
-  const cityTemp = condition.temp;
+  let cityTemp = condition.temp;
+  const icon = condition.icon;
   //   console.log({ cityFullName, cityTemp });
-  return { cityFullName, cityTemp };
+  const degree = document.getElementById('degree');
+  if (degree.classList.contains('celsius')) {
+    console.log('IN CELSIUS MODE');
+    cityTemp = util.fahrenheitToCelsius(cityTemp);
+  }
+  return { cityFullName, cityTemp, icon };
 }
 
 export { hitApi, getWeatherData };
