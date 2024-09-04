@@ -13,7 +13,7 @@ import * as util from './utils.js';
   const p = document.getElementById('temperature');
   const iconDiv = document.getElementById('icon');
   const span = document.getElementById('degree');
-  const toggleButton = document.getElementById('cel-fah');
+  const toggleButton = document.getElementById('degree-toggle');
 
   form.addEventListener('submit', (e) => {
     if (searchInput.value) {
@@ -36,14 +36,14 @@ import * as util from './utils.js';
     const degree = Number(p.innerText);
     let newDegree;
     if (span.classList.contains('celsius')) {
-      toggleButton.textContent = 'fahrenheit';
+      toggleButton.innerHTML = '&deg;F / <strong>&deg;C</strong>';
       span.innerHTML = '&deg;C';
       if (p.innerText === '') {
         return;
       }
       newDegree = util.fahrenheitToCelsius(degree);
     } else {
-      toggleButton.textContent = 'celsius';
+      toggleButton.innerHTML = '<strong>&deg;F</strong> / &deg;C';
       span.innerHTML = '&deg;F';
       if (p.innerText === '') {
         return;

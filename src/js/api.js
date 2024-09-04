@@ -14,10 +14,9 @@ async function getWeatherData(promise) {
   const cityFullName = weatherData.resolvedAddress;
   let cityTemp = condition.temp;
   const icon = condition.icon;
-  //   console.log({ cityFullName, cityTemp });
+
   const degree = document.getElementById('degree');
   if (degree.classList.contains('celsius')) {
-    console.log('IN CELSIUS MODE');
     cityTemp = util.fahrenheitToCelsius(cityTemp);
   }
   return { cityFullName, cityTemp, icon };
