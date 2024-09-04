@@ -3,9 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Weather-App</title>
+    <title>Weather App</title>
   </head>
   <body>
-    <h1>The Weather App</h1>
+    <form id="search-form">
+      <button id="degree-toggle" type="button">
+        <strong>&deg;F</strong> / &deg;C
+      </button>
+      <input type="search" placeholder="Search your city ..." />
+      <button>Search</button>
+    </form>
+    <h1 id="cityName"></h1>
+    <p id="temperature"></p>
+    <span id="degree" class="hide">&deg;F</span>
+    <div id="icon"></div>
   </body>
 </html>

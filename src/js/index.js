@@ -1,4 +1,4 @@
-import '../style/main.scss';
+import '../main.css';
 import * as apiFuncs from './api.js';
 import * as icon from './icon.js';
 import * as util from './utils.js';
