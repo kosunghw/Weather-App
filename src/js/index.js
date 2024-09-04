@@ -7,10 +7,10 @@ import * as util from './utils.js';
 (function () {
   const searchInput = document.querySelector('input');
   const form = document.querySelector('form');
-  const body = document.querySelector('body');
 
-  const h1 = document.getElementById('cityName');
-  const p = document.getElementById('temperature');
+  const address = document.getElementById('address');
+  const resolvedAddress = document.getElementById('resolved-address');
+  const temp = document.getElementById('temperature');
   const iconDiv = document.getElementById('icon');
   const span = document.getElementById('degree');
   const toggleButton = document.getElementById('degree-toggle');
@@ -19,8 +19,11 @@ import * as util from './utils.js';
     if (searchInput.value) {
       const promise = apiFuncs.hitApi(searchInput.value);
       apiFuncs.getWeatherData(promise).then((response) => {
-        h1.textContent = response.cityFullName;
-        p.innerText = response.cityTemp;
+        address.textContent = response.cityFullName;
+        resolvedAddress.textContent = response.resolvedAddress;
+        temp.innerText = response.cityTemp;
+
+        // condition.innerText = response.currentCondition;
         span.classList.add('show');
         iconDiv.innerHTML = icon.getIcon(response.icon);
       });
@@ -33,24 +36,24 @@ import * as util from './utils.js';
   toggleButton.addEventListener('click', () => {
     span.classList.toggle('celsius');
 
-    const degree = Number(p.innerText);
+    const degree = Number(temp.innerText);
     let newDegree;
     if (span.classList.contains('celsius')) {
       toggleButton.innerHTML = '&deg;F / <strong>&deg;C</strong>';
       span.innerHTML = '&deg;C';
-      if (p.innerText === '') {
+      if (temp.innerText === '') {
         return;
       }
       newDegree = util.fahrenheitToCelsius(degree);
     } else {
       toggleButton.innerHTML = '<strong>&deg;F</strong> / &deg;C';
       span.innerHTML = '&deg;F';
-      if (p.innerText === '') {
+      if (temp.innerText === '') {
         return;
       }
       newDegree = util.celsiusToFahrenheit(degree);
     }
-    p.innerText = newDegree;
+    temp.innerText = newDegree;
   });
 })();
 
