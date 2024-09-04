@@ -1,0 +1,48 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+body {
+  background-image: url('../assets/background.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+svg {
+  width: 100px;
+  height: 100px;
+}
+
+#search-form {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+
+  #degree-toggle {
+    width: 100px;
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+  }
+}
+
+#temperature {
+  display: inline-block;
+}
+
+.hide {
+  display: none;
+}
+
+.show {
+  display: inline-block;
+}
