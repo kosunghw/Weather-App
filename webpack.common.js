@@ -20,12 +20,12 @@ module.exports = {
       },
       {
         test: /\.(svg|png|jpg|jpeg|gif)$/i,
+        type: 'asset',
         use: {
           loader: 'file-loader',
           options: {
             esModule: false,
             name: '[name].[hash].[ext]',
-            outputPath: 'imgs',
           },
         },
       },
