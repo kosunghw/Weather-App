@@ -1,9 +1,11 @@
 function fahrenheitToCelsius(degree) {
-  return Math.round((degree - 32) * (5 / 9));
+  const celsius = (degree - 32) * (5 / 9);
+  return celsius.toFixed(1);
 }
 
 function celsiusToFahrenheit(degree) {
-  return Math.round(degree * (9 / 5) + 32);
+  const fahrenheit = degree * (9 / 5) + 32;
+  return fahrenheit.toFixed(1);
 }
 
 export { fahrenheitToCelsius, celsiusToFahrenheit };
