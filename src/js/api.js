@@ -1,41 +1,44 @@
 import * as util from './utils.js';
 
-function hitApi(city) {
+async function hitApi(city) {
   const apiKey = 'AZMSJW8MDWHLZ8WGESZARBBK2';
   const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${city}/?key=${apiKey}`;
-  return fetch(url, { mode: 'cors' });
+  const response = await fetch(url, { mode: 'cors' });
+  if (response.status !== 200) {
+    throwError(response.status);
+  } else {
+    const weatherData = await response.json();
+    const resultData = getData(weatherData);
+    console.log(resultData);
+    return resultData;
+  }
+  return 'error';
 }
 
-async function getWeatherData(promise) {
+async function getData(weatherData) {
   // This function takes in a promise by fetch(), and process the JSON data.
   // Returns an object that required for the app.
-  const weatherData = await promise.then((response) => response.json());
   const condition = weatherData.currentConditions;
-  const cityFullName = weatherData.address.toUpperCase();
-  const resolvedAddress = weatherData.resolvedAddress;
-  const today = weatherData.days[0];
-  const minTemp = today.tempmin;
-  const maxTemp = today.tempmax;
-  const feelsLike = condition.feelslike;
-  let cityTemp = condition.temp;
-  const icon = condition.icon;
-  const currentCondition = condition.conditions;
-  console.log(weatherData);
+  const result = {
+    cityFullName: weatherData.address.toUpperCase(),
+    resolvedAddress: weatherData.resolvedAddress,
+    cityTemp: condition.temp,
+    icon: condition.icon,
+  };
 
   const degree = document.getElementById('degree');
   if (degree.classList.contains('celsius')) {
-    cityTemp = util.fahrenheitToCelsius(cityTemp);
+    result.cityTemp = util.fahrenheitToCelsius(cityTemp);
   }
-  return {
-    cityFullName,
-    cityTemp,
-    icon,
-    currentCondition,
-    resolvedAddress,
-    minTemp,
-    maxTemp,
-    feelsLike,
-  };
+  return result;
 }
 
-export { hitApi, getWeatherData };
+function throwError(status) {
+  if (status === 400) {
+    alert('BAD REQUEST. USE CORRECT ADDRESS');
+  } else if (status === 429) {
+    alert('TOO MANY REQUEST');
+  }
+}
+
+export { hitApi };
