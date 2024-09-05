@@ -15,17 +15,38 @@ import * as util from './utils.js';
   const span = document.getElementById('degree');
   const toggleButton = document.getElementById('degree-toggle');
 
+  const weatherDataContainer = document.querySelector('.weather-data');
+
   form.addEventListener('submit', (e) => {
     if (searchInput.value) {
-      const promise = apiFuncs.hitApi(searchInput.value);
-      apiFuncs.getWeatherData(promise).then((response) => {
-        address.textContent = response.cityFullName;
-        resolvedAddress.textContent = response.resolvedAddress;
-        temp.innerText = response.cityTemp;
+      // const promise = apiFuncs.hitApi(searchInput.value);
+      // apiFuncs.getWeatherData(promise).then((response) => {
+      //   address.textContent = response.cityFullName;
+      //   resolvedAddress.textContent = response.resolvedAddress;
+      //   temp.innerText = response.cityTemp;
 
-        // condition.innerText = response.currentCondition;
-        span.classList.add('show');
-        iconDiv.innerHTML = icon.getIcon(response.icon);
+      //   // condition.innerText = response.currentCondition;
+      //   span.classList.add('show');
+      //   iconDiv.innerHTML = icon.getIcon(response.icon);
+      // });
+
+      apiFuncs.hitApi(searchInput.value).then((weatherData) => {
+        if (weatherData !== 'error') {
+          address.textContent = weatherData.cityFullName;
+          resolvedAddress.textContent = weatherData.resolvedAddress;
+          temp.innerText = weatherData.cityTemp;
+          span.classList.add('show');
+          iconDiv.innerHTML = icon.getIcon(weatherData.icon);
+
+          if (weatherDataContainer.classList.contains('hide')) {
+            weatherDataContainer.classList.remove('hide');
+            weatherDataContainer.classList.add('fadeIn');
+          } else {
+            weatherDataContainer.classList.remove('fadeIn');
+            void weatherDataContainer.offsetWidth;
+            weatherDataContainer.classList.add('fadeIn');
+          }
+        }
       });
 
       form.reset();
