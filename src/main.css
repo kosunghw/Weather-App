@@ -120,18 +120,11 @@ button#submit > img {
   display: inline-block;
 }
 
-.hide {
-  display: none;
-}
-
-.show {
-  display: inline-block;
-}
-
 .weather-container {
-  margin-top: 200px;
-  display: flex;
+  height: 80vh;
   margin-left: 200px;
+  display: flex;
+  align-items: center;
 }
 
 .weather-data {
@@ -142,7 +135,7 @@ button#submit > img {
     rgb(0, 0, 0),
     rgba(255, 255, 255, 0.411)
   );
-  box-shadow: 0 0 20px 10px #ffffffa1;
+  box-shadow: 0 0 20px 20px #ffffffa1;
   display: grid;
   gap: 15px;
   grid-template-rows: 1fr 2fr;
@@ -187,4 +180,30 @@ button#submit > img {
 
 #icon {
   align-self: center;
+}
+
+.hide {
+  opacity: 0;
+}
+
+.show {
+  opacity: 1;
+}
+
+@keyframes fadeIn {
+  0% {
+    margin-left: -100px;
+    margin-top: -100px;
+    box-shadow: none;
+    opacity: 0;
+  }
+  100% {
+    margin-left: 0;
+    margin-top: 0;
+    opacity: 1;
+  }
+}
+
+.fadeIn {
+  animation: fadeIn 1.5s;
 }
