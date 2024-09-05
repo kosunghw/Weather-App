@@ -6,13 +6,12 @@ async function hitApi(city) {
   const response = await fetch(url, { mode: 'cors' });
   if (response.status !== 200) {
     throwError(response.status);
+    return 'error';
   } else {
     const weatherData = await response.json();
     const resultData = getData(weatherData);
-    console.log(resultData);
     return resultData;
   }
-  return 'error';
 }
 
 async function getData(weatherData) {
