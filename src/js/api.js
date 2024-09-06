@@ -7,11 +7,10 @@ async function hitApi(city) {
   if (response.status !== 200) {
     throwError(response.status);
     return 'error';
-  } else {
-    const weatherData = await response.json();
-    const resultData = getData(weatherData);
-    return resultData;
   }
+  const weatherData = await response.json();
+  const resultData = getData(weatherData);
+  return resultData;
 }
 
 async function getData(weatherData) {
@@ -27,7 +26,7 @@ async function getData(weatherData) {
 
   const degree = document.getElementById('degree');
   if (degree.classList.contains('celsius')) {
-    result.cityTemp = util.fahrenheitToCelsius(cityTemp);
+    result['cityTemp'] = util.fahrenheitToCelsius(result.cityTemp);
   }
   return result;
 }
